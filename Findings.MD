@@ -9,3 +9,9 @@
 - 1.72-star penalty — late delivery flips a "great" order into a "poor" one
 - 7,701 late orders (~8%) vs 88,658 on-time — robust sample
 - Strongest confirmation yet: delivery experience drives reviews
+## Review score by delay severity (dose-response)
+- early/on-time: 4.29 | 1-3d: 3.29 | 4-7d: 2.10 | 8-15d: 1.68 | 16+d: 1.73
+- Clear monotonic decline — review damage scales with delay length
+- Biggest cliff: 1-3d → 4-7d (loses a full star), crossing below midpoint
+- Floor effect at 8+ days: score bottoms ~1.7, can't go lower (min is 1)
+- Recommendation seed: keeping misses under 3 days materially limits review damage
