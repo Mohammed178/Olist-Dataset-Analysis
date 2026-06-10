@@ -15,3 +15,9 @@
 - Biggest cliff: 1-3d → 4-7d (loses a full star), crossing below midpoint
 - Floor effect at 8+ days: score bottoms ~1.7, can't go lower (min is 1)
 - Recommendation seed: keeping misses under 3 days materially limits review damage
+## Repeat purchase rate by first-order delivery (retention)
+- Late first order: 2.51% return | On-time: 3.04% return
+- ~17% relative drop in repeat rate after a late first order
+- Absolute gap small (0.53pp); CIs barely separate — borderline significant
+- Olist baseline retention is very low (~3%), so signal is inherently faint
+- Honest framing: directionally supports hypothesis; review-score effect is the stronger lever
