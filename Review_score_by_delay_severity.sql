@@ -2,7 +2,7 @@
 WITH delays AS (
   SELECT
     review_score,
-    EXTRACT(DAY FROM order_delivered_customer_date - order_estimated_delivery_date) AS days_late
+    (order_delivered_customer_date::date - order_estimated_delivery_date::date) AS days_late
   FROM orders
   JOIN order_reviews ON orders.order_id = order_reviews.order_id
   WHERE order_delivered_customer_date IS NOT NULL

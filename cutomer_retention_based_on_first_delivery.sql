@@ -3,7 +3,7 @@ WITH order_history AS (
     c.customer_unique_id,
     o.order_purchase_timestamp,
     CASE
-      WHEN o.order_delivered_customer_date > o.order_estimated_delivery_date THEN 'late'
+      WHEN o.order_delivered_customer_date::date > o.order_estimated_delivery_date::date THEN 'late'
       ELSE 'on_time'
     END AS delivery_status,
     ROW_NUMBER() OVER (

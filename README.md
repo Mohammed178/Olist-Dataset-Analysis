@@ -12,27 +12,31 @@ This analysis asks: how much does delivery performance actually drive review sco
 
 Late deliveries cause measurably lower review scores, and the damage scales with the length of the delay. The effect is large enough to justify operational investment in delivery reliability.
 
+## How lateness is defined
+
+An order is late when it is delivered on a later calendar day than the estimated delivery date. Delivery on the estimated day counts as on time, regardless of the hour. This matters because the estimated date is stored at midnight, so a raw timestamp comparison would flag an order delivered at 2pm on the promised day as late. An earlier version of these queries used that timestamp comparison while the Power BI model used calendar days, which surfaced a roughly 1.2 point gap in the reported late rate. Tracing the gap to the midnight boundary and standardizing every query on the calendar-day rule is what reconciled the two tools. Findings 1 through 3 below use the calendar-day definition; findings 4 and 5 are flagged where their numbers still await a re-run.
+
 ## Key Findings
 
 ### 1. Lateness is structural, and it got worse as Olist scaled
 
-The late delivery rate climbed as order volume grew. Monthly volume rose ~2.7x between March 2017 and March 2018, while the late rate went from 5.3% to 20.8% over the same window. At the peak, 1 in 5 orders arrived after the promised date. Delivery capacity did not scale with demand.
+The late delivery rate climbed as order volume grew. Monthly volume rose ~2.7x between March 2017 and March 2018, while the late rate went from about 4.6% to 19.0% over the same window. At the peak, nearly 1 in 5 orders arrived after the promised date. Delivery capacity did not scale with demand.
 
 | Period | Late rate |
 |--------|-----------|
-| Most of 2017 | 2-5% |
-| Nov 2017 | 13.8% |
-| Feb 2018 | 15.6% |
-| **Mar 2018 (peak)** | **20.8%** |
+| Most of 2017 | 3-5% |
+| Nov 2017 | 12.4% |
+| Feb 2018 | 14.1% |
+| **Mar 2018 (peak)** | **19.0%** |
 
-### 2. A late order loses 1.72 stars
+### 2. A late order loses 2.02 stars
 
 | Delivery status | Orders | Avg review score |
 |-----------------|--------|------------------|
-| On time | 88,658 | 4.29 |
-| Late | 7,701 | 2.57 |
+| On time | 89,949 | 4.29 |
+| Late | 6,410 | 2.27 |
 
-On-time orders cluster around "good to great." Late orders cluster around "poor." The delivery experience flips the customer's perception of the entire purchase, regardless of the product itself.
+These on-time and late counts reconcile exactly with the dose-response buckets below: 89,949 early or on-time orders, and 6,410 late orders split across the four delay buckets. On-time orders cluster around "good to great." Late orders cluster around "poor." The delivery experience flips the customer's perception of the entire purchase, regardless of the product itself.
 
 ### 3. The damage scales with delay length (dose-response)
 
@@ -54,11 +58,15 @@ The monotonic decline is what makes the relationship credible. A confound would 
 
 ### 4. Late first orders dent retention by ~17% (relative)
 
+_Pending refresh: the figures in this section still use the earlier timestamp-level definition. Re-running the updated query moves some borderline first orders from late to on-time, so the gap is expected to narrow slightly. The direction of the finding is not expected to change._
+
 Among customers whose first order arrived on time, 3.04% placed a second order. Among customers whose first order was late, 2.51% did. That is a 17% relative drop in repeat purchase rate.
 
 Honest caveat: the absolute gap is 0.53 percentage points, and the confidence intervals barely separate. Olist's baseline retention is very low (~3%, mostly one-and-done buyers), so the retention signal is inherently faint. The review-score effect is the stronger, better-evidenced lever. This finding supports the hypothesis directionally rather than proving a revenue impact on its own.
 
 ### 5. Geography shows where the problem lives
+
+_Pending refresh: the state rates below still use the earlier timestamp-level definition. Day-level rates run a few points lower across the board, but the ranking (Nordeste worst, RO/AM/SP best) is expected to hold._
 
 | Pattern | States | Late rate |
 |---------|--------|-----------|
@@ -91,7 +99,7 @@ RJ runs at 13.5% late despite sitting next to the seller hub. Treating it like a
 The SP region works because sellers sit near customers. The Nordeste cluster (AL, MA, PI, CE, SE, BA at 14-24% late) is the inverse. Recruiting sellers in or near Salvador and Fortaleza, or staging inventory there, attacks the structural cause rather than the symptom.
 
 **5. Track late rate as a leading indicator during growth.**
-The 2017-2018 degradation shows what happens when volume outruns capacity: the late rate tripled in a year and peaked at 20.8%. Late rate should sit on the operational dashboard with an alert threshold, because review scores follow it with a lag.
+The 2017-2018 degradation shows what happens when volume outruns capacity: the late rate roughly quadrupled in a year and peaked near 19%. Late rate should sit on the operational dashboard with an alert threshold, because review scores follow it with a lag.
 
 ## Limitations
 
