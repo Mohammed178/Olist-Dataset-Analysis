@@ -29,6 +29,19 @@ The late delivery rate climbed as order volume grew. Monthly volume rose ~2.7x b
 | Feb 2018 | 14.1% |
 | **Mar 2018 (peak)** | **19.0%** |
 
+## Dashboard
+
+A single-page Power BI dashboard turns the five findings into a view an interviewer can read in about thirty seconds.
+
+<img width="1305" height="735" alt="Screenshot 2026-07-21 161816" src="https://github.com/user-attachments/assets/b5b0b01b-17c5-4741-8d69-ae365666ed42" />
+
+
+The layout leads with the evidence in order of strength. Four KPI cards across the top carry the headline numbers: 96,359 delivered orders, a 6.7% late rate, a 4.15 average review, and the 2.02 star gap between on-time and late orders. The hero visual is the dose-response chart, where average review score falls from 4.29 for on-time orders to 1.68 at eight to fifteen days late, colored on a teal-to-coral scale so the decline reads as it drops. To its right, a choropleth of Brazil shades each state by late rate, exposing the Nordeste cluster and the Rio de Janeiro anomaly. The bottom row pairs the monthly late-rate trend, which climbs to nearly 19% by March 2018, with the on-time versus late review split.
+
+Color is consistent across every visual: teal marks reliable delivery, coral marks failure, so the encoding is learned once and applies everywhere.
+
+**Files:** `olist_delivery.pbix` (interactive) and `assets/dashboard.png` (static preview).
+
 ### 2. A late order loses 2.02 stars
 
 | Delivery status | Orders | Avg review score |
